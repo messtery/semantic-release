@@ -1,5 +1,12 @@
 version: 2.1
 
+# Release only runs when triggered with release=true
+# (CircleCI UI "Trigger Pipeline" or the API); pushes don't release.
+parameters:
+  release:
+    type: boolean
+    default: false
+
 jobs:
   release:
     docker:
@@ -10,17 +17,6 @@ jobs:
 
 workflows:
   release:
+    when: << pipeline.parameters.release >>
     jobs:
-      # Every push to main waits here; approve the latest one to release
-      # all commits stacked since the last tag.
-      - hold:
-          type: approval
-          filters:
-            branches:
-              only: main
-      - release:
-          requires:
-            - hold
-          filters:
-            branches:
-              only: main
+      - release
