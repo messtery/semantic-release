@@ -1,18 +1,17 @@
 version: 2.1
-orbs:
-  node: circleci/node@5.0.0
+
 jobs:
   release:
-    executor: node/default
+    docker:
+      - image: cimg/node:22.11
     steps:
       - checkout
-      - node/install-packages # Install and automatically cache packages
-      # Run optional required steps before releasing
-      # - run: npm run build-script
       - run: npx semantic-release
 
 workflows:
-  test_and_release:
-    # Run the test jobs first, then the release only when all the test jobs are successful
+  release:
     jobs:
       - release:
+          filters:
+            branches:
+              only: main

@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/messtery/semantic-release/issues"
   },
-  "homepage": "https://github.com/messtery/semantic-release#readme"
+  "homepage": "https://github.com/messtery/semantic-release#readme",
+  "private": true,
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
 }
