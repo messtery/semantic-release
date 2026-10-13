@@ -11,7 +11,16 @@ jobs:
 workflows:
   release:
     jobs:
+      # Every push to main waits here; approve the latest one to release
+      # all commits stacked since the last tag.
+      - hold:
+          type: approval
+          filters:
+            branches:
+              only: main
       - release:
+          requires:
+            - hold
           filters:
             branches:
               only: main
